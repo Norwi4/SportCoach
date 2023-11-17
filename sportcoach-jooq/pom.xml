@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>SportCoach</artifactId>
+        <groupId>com.techsolutions</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>sportcoach-jooq</artifactId>
+
+
+    <dependencies>
+
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.33</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.jooq</groupId>
+            <artifactId>jooq-kotlin</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jooq</groupId>
+            <artifactId>jooq-codegen</artifactId>
+            <version>3.13.5</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.jooq</groupId>
+                    <artifactId>jooq</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.jooq</groupId>
+                    <artifactId>jooq-meta</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jooq</groupId>
+            <artifactId>jooq</artifactId>
+            <version>3.13.5</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jooq</groupId>
+            <artifactId>jooq-meta</artifactId>
+            <version>3.13.5</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.11</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jooq</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.jooq</groupId>
+                    <artifactId>jooq</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.jooq</groupId>
+                <artifactId>jooq-codegen-maven</artifactId>
+                <version>${jooq.version}</version>
+                <executions>
+                    <execution>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <jdbc>
+                        <driver>com.mysql.jdbc.Driver</driver>
+                        <url>jdbc:mysql://${DB_HOST}:${DB_PORT}/${DB_DATABASE}</url>
+                        <user>${DB_USERNAME}</user>
+                        <password>${DB_PASSWORD}</password>
+                    </jdbc>
+                    <generator>
+                        <name>org.jooq.codegen.JavaGenerator</name>
+                        <database>
+                            <includes>techsolutions_sportcoach\..*</includes>
+                        </database>
+                        <generate>
+                            <records>true</records>
+                        </generate>
+                        <target>
+                            <directory>target/generated-sources</directory>
+                            <packageName>com.techsolutions.sportcoach.jooq.domain</packageName>
+                        </target>
+                    </generator>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <activation>
+                <property>
+                    <name>!DB_HOST</name>
+                </property>
+            </activation>
+            <properties>
+                <DB_HOST>localhost</DB_HOST>
+                <DB_PORT>3306</DB_PORT>
+                <DB_DATABASE>techsolutions_sportcoach</DB_DATABASE>
+                <DB_USERNAME>root</DB_USERNAME>
+                <DB_PASSWORD>root</DB_PASSWORD>
+            </properties>
+        </profile>
+    </profiles>
+</project>
