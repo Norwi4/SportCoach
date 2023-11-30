@@ -22,6 +22,7 @@
         <module>sportcoach-jooq</module>
         <module>sportcoach-core</module>
         <module>sportcoach-web</module>
+        <module>sportcoach-auth</module>
     </modules>
 
     <properties>

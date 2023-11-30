@@ -16,6 +16,18 @@
 
         <dependency>
             <groupId>com.techsolutions</groupId>
+            <artifactId>sportcoach-auth</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.techsolutions</groupId>
+            <artifactId>sportcoach-jooq</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.techsolutions</groupId>
             <artifactId>sportcoach-core</artifactId>
             <version>${project.version}</version>
         </dependency>
